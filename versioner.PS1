@@ -10,7 +10,6 @@ if($version -notmatch 'v[0-9].[0-9].[0-9]') {
 }
 
 #$input = Read-Host "What would you like to increment? (major, minor, or patch) "
-$input = $env:TAG_UPDATE
 $version = $version.Substring(1)
 $arr = $version.Split(".")
 
@@ -29,7 +28,7 @@ $new_major = $major -as [int]
 $new_minor = $minor -as [int]
 $new_patch = $patch -as [int]
 
-switch($input) {
+switch($env:TAG_UPDATE) {
     "major" {
         $new_major = ($new_major + 1)
         $new_minor = 0
