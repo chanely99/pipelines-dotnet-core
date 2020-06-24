@@ -16,4 +16,10 @@ steps:
   displayName: 'dotnet build $(buildConfiguration)'
 - task: PowerShell@2
   inputs:
+    targetType: 'inline'
+    script: |
+      git config --global user.email "chanelyoung99@gmail.com"
+      git config --global user.name "Chanel Young"
+- task: PowerShell@2
+  inputs:
     filePath: '$(Build.SourcesDirectory)/versioner.PS1'
