@@ -23,12 +23,12 @@ while(($input -ne "minor") -and (($input -ne "major") -and ($input -ne "patch"))
 }
 #>
 #$message = Read-Host  "Add a message for the tag: "
-$message = $env:TAG_MESSAGE
+$message = $env:TAGMESSAGE
 $new_major = $major -as [int]
 $new_minor = $minor -as [int]
 $new_patch = $patch -as [int]
 
-switch($env:TAG_UPDATE) {
+switch($env:TAGUPDATELEVEL) {
     "major" {
         $new_major = ($new_major + 1)
         $new_minor = 0
