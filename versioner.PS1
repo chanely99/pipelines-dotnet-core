@@ -9,22 +9,22 @@ if($version -notmatch 'v[0-9].[0-9].[0-9]') {
 	exit 1
 }
 
-$input = Read-Host "What would you like to increment? (major, minor, or patch) "
-
+#$input = Read-Host "What would you like to increment? (major, minor, or patch) "
+$input = $env:TAG_UPDATE
 $version = $version.Substring(1)
 $arr = $version.Split(".")
 
 $major = $arr[0]
 $minor = $arr[1]
 $patch = $arr[2]
-
+<#
 while(($input -ne "minor") -and (($input -ne "major") -and ($input -ne "patch"))){
     Write-Host "Input must be major, minor, or patch"
     $input = Read-Host "What would you like to increment? (major, minor, or patch) "
 }
-
-$message = Read-Host  "Add a message for the tag: "
-
+#>
+#$message = Read-Host  "Add a message for the tag: "
+$message = $env:TAG_MESSAGE
 $new_major = $major -as [int]
 $new_minor = $minor -as [int]
 $new_patch = $patch -as [int]
