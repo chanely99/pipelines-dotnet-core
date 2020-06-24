@@ -2,6 +2,7 @@
 $version = (git describe --abbrev=0 --tags)
 
 Write-Host "Current version: $version"
+Write-Host "tag update level: $env:TAGUPDATELEVEL"
 
 if($version -notmatch 'v[0-9].[0-9].[0-9]') {
     Write-Host "current tag is $version"
