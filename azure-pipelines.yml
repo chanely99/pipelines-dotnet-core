@@ -8,6 +8,8 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  tagUpdateLevel: 'minor'
+  tagMessage: 'new feature'
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
