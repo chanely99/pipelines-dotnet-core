@@ -48,5 +48,6 @@ $new_tag = "v$new_major.$new_minor.$new_patch"
 
 
 git tag -a $new_tag -m "$message"
+git push --tags
 
 Write-Host "new tag: $new_tag"
