@@ -3,41 +3,17 @@
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
-pr:
+trigger: 
   - master
+  - development
 
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
   buildConfiguration: 'Release'
-  tagUpdateLevel: 'minor'
-  tagMessage: 'new feature'
+  branch: ''
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      git config --global user.email "chanelyoung99@gmail.com"
-      git config --global user.name "Chanel Young"
-      git config --global url."git@github.com:".insteadOf "https://github.com/"
-
-
-- task: PowerShell@2
-  displayName: 'creating merged branch'
-  inputs:
-    filePath: '$(Build.SourcesDirectory)/PipelineScripts/dry_run_merge.PS1'
-
-- task: PowerShell@2
-  displayName: 'Testing merged branch'
-  inputs:
-    filePath: '$(Build.SourcesDirectory)/PipelineScripts/build_checker.PS1'
-- task: PowerShell@2
-  displayName: 'cleaning up merged branch'
-  inputs:
-    filePath: '$(Build.SourcesDirectory)/PipelineScripts/dry_run_merge_cleanup.PS1'
-
-
