@@ -39,9 +39,5 @@ steps:
   displayName: 'cleaning up merged branch'
   inputs:
     filePath: '$(Build.SourcesDirectory)/PipelineScripts/dry_run_merge_cleanup.PS1'
-- task: PowerShell@2
-  displayName: 'creating new tag'
-  inputs:
-    filePath: '$(Build.SourcesDirectory)/PipelineScripts/versioner.PS1'
 
 
