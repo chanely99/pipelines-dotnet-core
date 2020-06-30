@@ -1,4 +1,4 @@
-SOMETHING IN DEVELOPMENT
+YET ANOTHER EDIT
 SOMTHING IN FEATURE
 # Sample ASP.NET Core application for Azure Pipelines docs
 
