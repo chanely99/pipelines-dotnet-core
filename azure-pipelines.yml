@@ -22,17 +22,17 @@ steps:
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
   displayName: 'building master'
   inputs:
-    filePath: '$(Build.SourcesDirectory)/PipelineScripts/build.PS1'
+    filePath: '$(Build.SourcesDirectory)/build.PS1'
     arguments: "master"
 - task: PowerShell@2
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
   displayName: 'building development'
   inputs:
-    filePath: '$(Build.SourcesDirectory)/PipelineScripts/build.PS1'
+    filePath: '$(Build.SourcesDirectory)/build.PS1'
     arguments: "development"
 - task: PowerShell@2
   condition: and(ne(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['Build.SourceBranch'], 'refs/heads/development'))
   displayName: 'building user branch'
   inputs:
-    filePath: '$(Build.SourcesDirectory)/PipelineScripts/build.PS1'
+    filePath: '$(Build.SourcesDirectory)/build.PS1'
     arguments: "user branch"
