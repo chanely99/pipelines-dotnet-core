@@ -1,6 +1,7 @@
 #getting current tag
 $version = (git describe --abbrev=0 --tags)
 
+Write-Host "something in master that's not in development"
 Write-Host "Current version: $version"
 Write-Host "tag update level: $env:TAGUPDATELEVEL"
 
