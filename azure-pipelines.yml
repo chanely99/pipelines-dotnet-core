@@ -22,17 +22,17 @@ steps:
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
   displayName: 'building development'
   inputs:
-    filePath: '$(Build.SourcesDirectory)/build.PS1'
+    filePath: '$(Build.SourcesDirectory)/versioner.PS1'
     arguments: 'master'
 - task: PowerShell@2
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
   displayName: 'building development'
   inputs:
-    filePath: '$(Build.SourcesDirectory)/build.PS1'
+    filePath: '$(Build.SourcesDirectory)/versioner.PS1'
     arguments: "development"
 - task: PowerShell@2
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/feature*')
   displayName: 'building feature branch'
   inputs:
-    filePath: '$(Build.SourcesDirectory)/build.PS1'
+    filePath: '$(Build.SourcesDirectory)/versioner.PS1'
     arguments: "feature branch"
