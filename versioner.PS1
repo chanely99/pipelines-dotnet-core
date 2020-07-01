@@ -1,4 +1,7 @@
-#getting current tag
+$branch=$args[0]
+Write-Host "Triggering build for $branch"
+
+<##getting current tag
 $version = (git describe --abbrev=0 --tags)
 $message = $env:TAGMESSAGE
 $tag_update_level = $env:TAGUPDATELEVEL
@@ -59,3 +62,4 @@ Write-Host "tag message: $message"
 
 
 #git tag -a $new_tag -m $message
+#>
