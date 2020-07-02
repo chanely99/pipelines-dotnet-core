@@ -22,7 +22,7 @@ stages:
     pool:
       vmImage: 'Ubuntu-latest'
     # creates an environment if it doesn't exist
-    environment: manual-approve-test
+    environment: manual-approval-test
     strategy:
       runOnce:
         deploy:
