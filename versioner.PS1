@@ -27,7 +27,7 @@ if($message -eq $null){
     $message = "$version $tag_update_level"
 }
 
-Write-Host "Current version: $version"
+Write-Host "Current tag: $version"
 Write-Host "tag update level: $tag_update_level"
 
 if($version -notmatch 'v[0-9].[0-9].[0-9]') {
