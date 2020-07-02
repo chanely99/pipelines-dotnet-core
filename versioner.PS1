@@ -32,7 +32,7 @@ if(!$message){
 Write-Host "Current tag: $version"
 Write-Host "tag update level: $newtag"
 
-if($version -notmatch '[0-9].[0-9].[0-9]') {
+if($version -notmatch '[0-9]|[1-9][0-9].[0-9]|[1-9][0-9].[0-9]|[1-9][0-9]') {
     Write-Host "current tag is $version"
     Write-Host "tag must be formatted as v[major].[minor].[patch], where major, minor, and patch are integers"
     exit 1
