@@ -1,27 +1,24 @@
-param (
-    [switch]$newtag = $newtag
-
-)
+param ($newtag)
 
 #getting current tag
-$version = (git describe --abbrev=0 --tags)
+$version = (git describe --abbrev=0 --tags).Substring(1)
 
 if(!$newtag){
-    Write-Host "current tag is $version"
+    Write-Host "$version"
     Exit
 }
-
-$message = 'message' #$env:TAGMESSAGE
-$tag_update_level = 'patch'#$env:TAGUPDATELEVEL
-
-
-
-#if not specified, tag update level is default patch, version is 0.0.0, message is "<version> <tag update level>"
-if($version -eq $null) {
-    $version = 'v0.0.0'
+if(($newtag -ne "major") -and ($newtag -ne "minor") -and ($newtag -ne "patch")){
+    Write-Host "newtag argument must be major, minor, or patch"
+    Exit
 }
-if($tag_update_level -eq $null){
-    $tag_update_level = "patch"
+$message = 'message' #$env:TAGMESSAGE
+$tag_update_level = $newtag#$env:TAGUPDATELEVEL
+
+
+
+#if not specified, version is 0.0.0, message is "<version> <tag update level>"
+if($version -eq $null) {
+    $version = '0.0.0'
 }
 if($message -eq $null){
     $message = "$version $tag_update_level"
@@ -30,13 +27,12 @@ if($message -eq $null){
 Write-Host "Current tag: $version"
 Write-Host "tag update level: $tag_update_level"
 
-if($version -notmatch 'v[0-9].[0-9].[0-9]') {
+if($version -notmatch '[0-9].[0-9].[0-9]') {
     Write-Host "current tag is $version"
     Write-Host "tag must be formatted as v[major].[minor].[patch], where major, minor, and patch are integers"
     exit 1
 }
 
-$version = $version.Substring(1)
 $arr = $version.Split(".")
 
 $major = $arr[0]
