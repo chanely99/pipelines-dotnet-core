@@ -1,10 +1,19 @@
-$branch=$args[0]
-Write-Host "Triggering build for $branch"
+param (
+    [switch]$newtag = $newtag
 
-<##getting current tag
+)
+
+#getting current tag
 $version = (git describe --abbrev=0 --tags)
-$message = $env:TAGMESSAGE
-$tag_update_level = $env:TAGUPDATELEVEL
+
+if(!$newtag){
+    Write-Host "current tag is $version"
+    Exit
+}
+
+$message = 'message' #$env:TAGMESSAGE
+$tag_update_level = 'patch'#$env:TAGUPDATELEVEL
+
 
 
 #if not specified, tag update level is default patch, version is 0.0.0, message is "<version> <tag update level>"
@@ -18,7 +27,6 @@ if($message -eq $null){
     $message = "$version $tag_update_level"
 }
 
-Write-Host "something in master that's not in development"
 Write-Host "Current version: $version"
 Write-Host "tag update level: $tag_update_level"
 
@@ -58,8 +66,5 @@ switch($tag_update_level) {
 $new_tag = "v$new_major.$new_minor.$new_patch"
 
 Write-Host "new tag: $new_tag"
-Write-Host "tag message: $message"
 
-
-#git tag -a $new_tag -m $message
-#>
+git tag -a $new_tag -m $message
