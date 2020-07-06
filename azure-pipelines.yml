@@ -32,7 +32,15 @@ stages:
     steps:
     - script: dotnet build --configuration $(buildConfiguration)
       displayName: 'dotnet build $(buildConfiguration)'
-
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your PowerShell commands here.
+          
+          git config --global user.email "chanelyoung99@gmail.com"
+          git config --global user.name "Chanel Young"
+          
     - task: PowerShell@2
       condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
       displayName: 'building development'
