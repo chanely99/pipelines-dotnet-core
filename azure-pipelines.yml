@@ -43,10 +43,9 @@ stages:
           
     - task: PowerShell@2
       condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
-      displayName: 'building development'
+      displayName: 'building master'
       inputs:
         filePath: '$(Build.SourcesDirectory)/versioner.PS1'
-        arguments: 'minor'
     - task: PowerShell@2
       condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
       displayName: 'building development'
