@@ -21,6 +21,7 @@ if(!$newtag){
 #make sure newtag flag correct
 if(($newtag -ne "major") -and ($newtag -ne "minor") -and ($newtag -ne "patch")){
     Write-Host "newtag argument must be major, minor, or patch"
+    Write-Host "newtag was $newtag"
     Exit
 }
 
