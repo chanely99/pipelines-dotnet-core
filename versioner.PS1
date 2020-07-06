@@ -1,8 +1,8 @@
 #hide any git error output
 param ($newtag, $message)
-
+ 
 #$env:GIT_REDIRECT_STDERR = '2>&1'
-
+ 
 #getting current tag
 $tagexists = (git tag)
 if($tagexists -eq $null){
@@ -10,46 +10,41 @@ if($tagexists -eq $null){
 }
 else{
     $version = (git describe --abbrev=0 --tags)
-    $version = $version.Substring(1)
+    # $version = $version.Substring(1) | Out-String
 }
-
+ 
 #just return current version of no newtag flag
 if(!$newtag){
-   Write-Host "$version" 
+    Write-Output "$version" | Out-String
     Exit
 }
 #make sure newtag flag correct
 if(($newtag -ne "major") -and ($newtag -ne "minor") -and ($newtag -ne "patch")){
     Write-Host "newtag argument must be major, minor, or patch"
-    Write-Host "newtag was $newtag"
     Exit
 }
-
+ 
 #set message if not inputted
 if(!$message){
     $message = "$version $newtag"
 }
-
-Write-Host "Current tag: $version"
-Write-Host "tag update level: $newtag"
-
+ 
 if($version -notmatch '[0-9]|[1-9][0-9].[0-9]|[1-9][0-9].[0-9]|[1-9][0-9]') {
     Write-Host "current tag is $version"
     Write-Host "tag must be formatted as v[major].[minor].[patch], where major, minor, and patch are integers"
     exit 1
 }
-
+ 
 $arr = $version.Split(".")
-
+ 
 $major = $arr[0]
 $minor = $arr[1]
 $patch = $arr[2]
-
-
+ 
 $new_major = $major -as [int]
 $new_minor = $minor -as [int]
 $new_patch = $patch -as [int]
-
+ 
 switch($newtag) {
     "major" {
         $new_major = ($new_major + 1)
@@ -64,9 +59,7 @@ switch($newtag) {
         $new_patch = ($new_patch + 1)
     }
 }
-
+ 
 $updated_tag = "v$new_major.$new_minor.$new_patch"
-
-Write-Host "new tag: $updated_tag"
-
-git tag -a $updated_tag -m $message
+ 
+Write-Output "$updated_tag"
