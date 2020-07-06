@@ -10,7 +10,7 @@ if($tagexists -eq $null){
 }
 else{
     $version = (git describe --abbrev=0 --tags)
-    $version = $version.Substring(1) 
+    #$version = $version.Substring(1) 
 }
  
 #just return current version of no newtag flag
