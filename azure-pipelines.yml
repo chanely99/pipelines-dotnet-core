@@ -8,42 +8,58 @@ pr:
   - development
   - feature*
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 variables:
   buildConfiguration: 'Release'
   branch: ''
 
 stages: 
-- stage: deploy
-  jobs:
-  - job: Versioning
+- stage: build
+  jobs: 
+  - job: build app
     steps:
     - script: dotnet build --configuration $(buildConfiguration)
       displayName: 'dotnet build $(buildConfiguration)'
     - task: PowerShell@2
+      displayName: git configuration
       inputs:
         targetType: 'inline'
-        script: |
-          # Write your PowerShell commands here.
-          
+        script: 
           git config --global user.email "chanelyoung99@gmail.com"
           git config --global user.name "Chanel Young"
-          
-    - task: PowerShell@2
-      condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
-      displayName: 'building master'
-      inputs:
-        filePath: '$(Build.SourcesDirectory)/versioner.PS1'
-    - task: PowerShell@2
-      condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
-      displayName: 'building development'
-      inputs:
-        filePath: '$(Build.SourcesDirectory)/versioner.PS1'
-        arguments: "minor"
-    - task: PowerShell@2
-      condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/feature')
-      displayName: 'building feature branch'
-      inputs:
-        filePath: '$(Build.SourcesDirectory)/versioner.PS1'
-        arguments: "minor"
+
+- stage: branch_specific
+  jobs: 
+    - job: master_job
+      steps:    
+      - task: PowerShell@2
+        condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+        displayName: 'versioning master'
+        inputs:
+          filePath: '$(Build.SourcesDirectory)/versioner.PS1'
+    - job: development_job
+      steps: 
+      - task: PowerShell@2
+        condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
+        displayName: 'versioning development'
+        inputs:
+          filePath: '$(Build.SourcesDirectory)/versioner.PS1'
+          arguments: "minor"
+    - job: feature_branch_job 
+      steps: 
+      - task: PowerShell@2
+        condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/feature')
+        displayName: 'versioning feature'
+        inputs:
+          filePath: '$(Build.SourcesDirectory)/versioner.PS1'
+          arguments: "minor"
+- stage: testing
+  jobs:
+    - job: test_1
+      steps: 
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'test'
+          projects: '$(Build.SourcesDirectory)/Tests/Tests.csproj'
+      
