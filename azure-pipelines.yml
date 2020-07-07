@@ -32,24 +32,24 @@ stages:
 - stage: branch_specific
   jobs: 
     - job: master_job
+      condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
       steps:    
       - task: PowerShell@2
-        condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
         displayName: 'versioning master'
         inputs:
           filePath: '$(Build.SourcesDirectory)/versioner.PS1'
     - job: development_job
+      condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
       steps: 
       - task: PowerShell@2
-        condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
         displayName: 'versioning development'
         inputs:
           filePath: '$(Build.SourcesDirectory)/versioner.PS1'
           arguments: "minor"
-    - job: feature_branch_job 
+    - job: feature_branch_job
+      condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/feature') 
       steps: 
       - task: PowerShell@2
-        condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/feature')
         displayName: 'versioning feature'
         inputs:
           filePath: '$(Build.SourcesDirectory)/versioner.PS1'
