@@ -17,7 +17,7 @@ variables:
 stages: 
 - stage: build
   jobs: 
-  - job: build app
+  - job: build
     steps:
     - script: dotnet build --configuration $(buildConfiguration)
       displayName: 'dotnet build $(buildConfiguration)'
