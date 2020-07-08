@@ -62,4 +62,9 @@ stages:
         inputs:
           command: 'test'
           projects: '$(Build.SourcesDirectory)/Tests/Tests.csproj'
-      
+- stage: create_artifact
+  jobs: 
+    - job: create
+      steps: 
+      - publish: $(System.DefaultWorkingDirectory)/bin/WebApp
+        artifact: WebApp
