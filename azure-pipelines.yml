@@ -80,5 +80,5 @@ stages:
   jobs: 
     - job: create
       steps: 
-      - publish: $(System.DefaultWorkingDirectory)/bin/WebApp
-        artifact: WebApp
+      - publish: $(System.DefaultWorkingDirectory)/bin/Release
+        artifact: Release
