@@ -1,0 +1,7 @@
+steps: 
+    - task: PowerShell@2
+      displayName: git configuration
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host "This has steps used by only development"

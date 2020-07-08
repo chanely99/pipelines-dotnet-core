@@ -48,6 +48,7 @@ stages:
     - job: master_job
       condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
       steps:    
+      - template: development-steps.yml
       - task: PowerShell@2
         displayName: 'versioning master'
         inputs:
