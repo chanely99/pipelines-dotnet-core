@@ -15,6 +15,20 @@ variables:
   branch: ''
 
 stages: 
+- stage: deploy_with_manual_approval
+  jobs:
+  - deployment: DeployWeb
+    displayName: deploy Web App
+    pool:
+      vmImage: 'Ubuntu-latest'
+    # creates an environment if it doesn't exist
+    environment: manual-approval-test
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo Hello world
+
 - stage: build
   jobs: 
   - job: build
